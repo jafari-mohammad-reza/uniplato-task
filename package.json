@@ -1,0 +1,35 @@
+{
+  "name": "uniplato-task",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "start:prod": "node dist/index.js | pino-pretty --colorize",
+    "start:dev": "ts-node-dev ./src/index.ts | pino-pretty --colorize",
+    "prisma": "dotenv -e .env prisma",
+    "db:gen": "pnpm run prisma generate",
+    "db:studio": "pnpm run prisma studio",
+    "db:migrate": "pnpm run prisma migrate dev",
+    "db:push": "pnpm run prisma db push",
+    "lint": "./node_modules/.bin/eslint"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@fastify/env": "^4.3.0",
+    "@fastify/helmet": "^11.1.1",
+    "@fastify/jwt": "^8.0.0",
+    "@fastify/swagger": "^8.13.0",
+    "fastify": "^4.25.2",
+    "fluent-json-schema": "^4.2.1",
+    "jsonwebtoken": "^9.0.2",
+    "pino": "^8.17.2",
+    "ts-node": "^10.9.2"
+  },
+  "devDependencies": {
+    "@types/node": "^20.10.8",
+    "tsc": "^2.0.4"
+  }
+}
