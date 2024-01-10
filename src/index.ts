@@ -1,6 +1,7 @@
 import Fastify from 'fastify';
 import { EnvConfig, SwaggerConf } from './config';
 import pino from 'pino';
+import { AuthRoute } from 'routes';
 declare module 'fastify' {
   interface FastifyInstance {
     config: {
@@ -15,7 +16,7 @@ async function InitServer() {
   try {
     await EnvConfig(server);
     await SwaggerConf(server);
-
+    await AuthRoute(server);
     const port = parseInt(server.config.PORT, 10);
     await server.listen({ port });
     console.log(`Server listening on ${port}`);
