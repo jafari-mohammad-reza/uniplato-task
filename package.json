@@ -22,14 +22,21 @@
     "@fastify/helmet": "^11.1.1",
     "@fastify/jwt": "^8.0.0",
     "@fastify/swagger": "^8.13.0",
+    "@prisma/client": "^5.8.0",
+    "bcrypt": "^5.1.1",
+    "dotenv": "^16.3.1",
     "fastify": "^4.25.2",
     "fluent-json-schema": "^4.2.1",
     "jsonwebtoken": "^9.0.2",
     "pino": "^8.17.2",
-    "ts-node": "^10.9.2"
+    "pino-pretty": "^10.3.1",
+    "ts-node-dev": "^2.0.0"
   },
   "devDependencies": {
     "@types/node": "^20.10.8",
-    "tsc": "^2.0.4"
+    "prisma": "^5.8.0",
+    "ts-node": "^10.9.2",
+    "tsc": "^2.0.4",
+    "typescript": "^5.3.3"
   }
 }
