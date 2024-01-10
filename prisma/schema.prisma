@@ -11,3 +11,20 @@ datasource db {
 }
 
 
+
+model Category {
+  id         Int     @id @default(autoincrement())
+  latitude   Int?
+  longitude  Int?
+  category   String? @db.VarChar(255)
+  counter    Int?
+  ownerId    Int?
+  owner      User?   @relation(fields: [ownerId], references: [id])
+}
+
+model User {
+  id         Int       @id @default(autoincrement())
+  email      String    @unique
+  password   String
+  categories Category[]
+}
