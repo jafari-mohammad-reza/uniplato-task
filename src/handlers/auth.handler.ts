@@ -7,6 +7,7 @@ export async function LoginHandler(
   rep: FastifyReply,
 ) {
   const { email, password } = req.body;
+  console.log('email, password', email, password);
   const token = await Login(email, password);
   // TODO: send token
   return rep.send({

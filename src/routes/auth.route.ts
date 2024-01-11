@@ -16,11 +16,13 @@ export async function AuthRoute(server: FastifyInstance) {
     method: 'POST',
     handler: LoginHandler,
     ...emailSchema,
+    schema: emailSchema,
   });
   server.route({
     url: '/auth/register',
     method: 'POST',
     handler: RegisterHandler,
     ...emailSchema,
+    schema: emailSchema,
   });
 }

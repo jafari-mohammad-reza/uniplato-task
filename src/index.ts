@@ -2,6 +2,7 @@ import Fastify from 'fastify';
 import { CookieConf, EnvConfig, SwaggerConf } from './config';
 import pino from 'pino';
 import { AuthRoute } from './routes';
+import formBody from '@fastify/formbody';
 declare module 'fastify' {
   interface FastifyInstance {
     config: {
@@ -17,6 +18,7 @@ async function InitServer() {
     await EnvConfig(server);
     await SwaggerConf(server);
     await CookieConf(server);
+    await server.register(formBody);
     await AuthRoute(server);
     const port = parseInt(server.config.PORT, 10);
     await server.listen({ port });
