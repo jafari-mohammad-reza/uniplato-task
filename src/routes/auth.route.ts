@@ -1,5 +1,5 @@
 import { FastifyInstance } from 'fastify';
-import { LoginHandler, RegisterHandler } from 'handlers';
+import { LoginHandler, RegisterHandler } from '../handlers';
 import FluentSchema from 'fluent-json-schema';
 
 export async function AuthRoute(server: FastifyInstance) {
