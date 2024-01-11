@@ -30,7 +30,7 @@ dependencies:
     specifier: ^5.8.0
     version: 5.8.0(prisma@5.8.0)
   bcrypt:
-    specifier: ^5.1.1
+    specifier: ^5.0.1
     version: 5.1.1
   dotenv:
     specifier: ^16.3.1
@@ -55,6 +55,12 @@ dependencies:
     version: 2.0.0(@types/node@20.10.8)(typescript@5.3.3)
 
 devDependencies:
+  '@types/bcrypt':
+    specifier: ^5.0.1
+    version: 5.0.2
+  '@types/jsonwebtoken':
+    specifier: ^9.0.5
+    version: 9.0.5
   '@types/node':
     specifier: ^20.10.8
     version: 20.10.8
@@ -274,6 +280,18 @@ packages:
 
   /@tsconfig/node16@1.0.4:
     resolution: {integrity: sha512-vxhUy4J8lyeyinH7Azl1pdd43GJhZH/tP2weN8TntQblOY+A0XbT8DJk1/oCPuOOyg/Ja757rG0CgHcWC8OfMA==}
+
+  /@types/bcrypt@5.0.2:
+    resolution: {integrity: sha512-6atioO8Y75fNcbmj0G7UjI9lXN2pQ/IGJ2FWT4a/btd0Lk9lQalHLKhkgKVZ3r+spnmWUKfbMi1GEe9wyHQfNQ==}
+    dependencies:
+      '@types/node': 20.10.8
+    dev: true
+
+  /@types/jsonwebtoken@9.0.5:
+    resolution: {integrity: sha512-VRLSGzik+Unrup6BsouBeHsf4d1hOEgYWTm/7Nmw1sXoN1+tRly/Gy/po3yeahnP4jfnQWWAhQAqcNfH7ngOkA==}
+    dependencies:
+      '@types/node': 20.10.8
+    dev: true
 
   /@types/node@20.10.8:
     resolution: {integrity: sha512-f8nQs3cLxbAFc00vEU59yf9UyGUftkPaLGfvbVOIDdx2i1b8epBqj2aNGyP19fiyXWvlmZ7qC1XLjAzw/OKIeA==}

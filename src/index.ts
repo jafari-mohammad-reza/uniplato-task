@@ -21,9 +21,8 @@ async function InitServer() {
     await server.register(formBody);
     await AuthRoute(server);
     const port = parseInt(server.config.PORT, 10);
-    await server.listen({ port });
+    await server.listen({ port, host: '0.0.0.0' });
     console.log(`Server listening on ${port}`);
-
     process.on('unhandledRejection', (error) => {
       logger.error(error);
       process.exit(1);

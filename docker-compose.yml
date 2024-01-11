@@ -5,6 +5,8 @@ services:
       context: .
       dockerfile: Dockerfile
       target: development
+    environment:
+      - DATABASE_URL=mysql://root:root@mysql:3306/uniplato
     ports:
       - '4000:4000'
       - '9229:9229'
@@ -14,6 +16,9 @@ services:
       - mysql
     env_file:
       - .env
+    networks:
+      - uniplato_network
+
   mysql:
     image: mysql:8.0
     container_name: mysql
@@ -28,5 +33,12 @@ services:
       - '3306:3306'
     volumes:
       - mysql_data:/var/lib/mysql
+    networks:
+      - uniplato_network
+
 volumes:
   mysql_data:
+
+networks:
+  uniplato_network:
+    driver: bridge
