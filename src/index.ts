@@ -1,6 +1,8 @@
 import Fastify from 'fastify';
-import { EnvConfig, SwaggerConf } from './config';
+import { CookieConf, EnvConfig, SwaggerConf } from './config';
 import pino from 'pino';
+import { AuthRoute } from './routes';
+import formBody from '@fastify/formbody';
 declare module 'fastify' {
   interface FastifyInstance {
     config: {
@@ -15,11 +17,12 @@ async function InitServer() {
   try {
     await EnvConfig(server);
     await SwaggerConf(server);
-
+    await CookieConf(server);
+    await server.register(formBody);
+    await AuthRoute(server);
     const port = parseInt(server.config.PORT, 10);
-    await server.listen({ port });
+    await server.listen({ port, host: '0.0.0.0' });
     console.log(`Server listening on ${port}`);
-
     process.on('unhandledRejection', (error) => {
       logger.error(error);
       process.exit(1);
