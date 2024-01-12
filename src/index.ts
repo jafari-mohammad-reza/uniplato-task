@@ -1,7 +1,7 @@
 import Fastify from 'fastify';
 import { CookieConf, EnvConfig, SwaggerConf } from './config';
 import pino from 'pino';
-import { AuthRoute } from './routes';
+import { AuthRoute, CategoryRoute } from './routes';
 import formBody from '@fastify/formbody';
 declare module 'fastify' {
   interface FastifyInstance {
@@ -19,7 +19,8 @@ async function InitServer() {
     await SwaggerConf(server);
     await CookieConf(server);
     await server.register(formBody);
-    await AuthRoute(server);
+    AuthRoute(server);
+    CategoryRoute(server);
     const port = parseInt(server.config.PORT, 10);
     await server.listen({ port, host: '0.0.0.0' });
     console.log(`Server listening on ${port}`);
