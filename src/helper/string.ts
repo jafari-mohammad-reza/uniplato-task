@@ -14,7 +14,11 @@ export function SignToken(paylaod: jwt.JwtPayload, exp: string = '30m'): string 
 }
 
 export function DecodeToken(token: string): jwt.JwtPayload {
-  return jwt.decode(token) as jwt.JwtPayload;
+  return jwt.verify(token, process.env.JWT_SECRET) as jwt.JwtPayload;
+}
+export function isJwtExpired(exp: number) {
+  const currentTimestamp = Math.floor(Date.now() / 1000);
+  return currentTimestamp > exp;
 }
 
 export function hashString(dataToHash: string): HashedData {

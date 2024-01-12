@@ -1,3 +1,4 @@
+import { FindUser, UserExist } from '../db';
 import { compareHashed, ERRORS, hashString, prisma, SignToken } from '../helper';
 export async function Login(email: string, password: string): Promise<string> {
   const existUser = await FindUser(email);
@@ -31,22 +32,4 @@ export async function Register(email: string, password: string) {
   if (!createdUser) {
     throw ERRORS.createFailed;
   }
-}
-export async function UserExist(email: string): Promise<boolean> {
-  const user = await FindUser(email);
-  return !!user;
-}
-
-export async function FindUser(
-  email: string,
-): Promise<{ id: number; email: string; password: string; salt: string }> {
-  return await prisma.user.findFirst({
-    where: { email },
-    select: {
-      email: true,
-      password: true,
-      salt: true,
-      id: true,
-    },
-  });
 }

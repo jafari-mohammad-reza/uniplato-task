@@ -13,12 +13,14 @@ services:
     volumes:
       - ./:/app/
     depends_on:
-      - mysql
+      mysql:
+        condition: service_healthy # Wait for MySQL to be healthy
     env_file:
       - .env
     restart: on-failure
     networks:
       - uniplato_network
+    # command: ['wait-for-it.sh', 'mysql:3306', '--', 'pnpm', 'run', 'start:dev']
 
   mysql:
     image: mysql:8.0
@@ -36,6 +38,10 @@ services:
       - mysql_data:/var/lib/mysql
     networks:
       - uniplato_network
+    healthcheck:
+      test: ['CMD', 'mysqladmin', 'ping', '-h', 'localhost']
+      timeout: 5s
+      retries: 10
 
 volumes:
   mysql_data:

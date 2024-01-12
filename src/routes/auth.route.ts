@@ -2,7 +2,7 @@ import { FastifyInstance } from 'fastify';
 import { LoginHandler, RegisterHandler } from '../handlers';
 import FluentSchema from 'fluent-json-schema';
 
-export async function AuthRoute(server: FastifyInstance) {
+export function AuthRoute(server: FastifyInstance) {
   const emailSchema = {
     body: FluentSchema.object()
       .prop('email', FluentSchema.string().format('email').required())
@@ -15,13 +15,13 @@ export async function AuthRoute(server: FastifyInstance) {
     url: '/auth/login',
     method: 'POST',
     handler: LoginHandler,
-    ...emailSchema,
+    schema: emailSchema,
   });
   server.route({
     url: '/auth/register',
     method: 'POST',
     handler: RegisterHandler,
-    ...emailSchema,
+
     schema: emailSchema,
   });
 }

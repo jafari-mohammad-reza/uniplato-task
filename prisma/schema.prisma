@@ -17,7 +17,7 @@ model Category {
   id         Int     @id @default(autoincrement())
   latitude   Int?
   longitude  Int?
-  category   String? @db.VarChar(255)
+  title   String? @db.VarChar(255)
   counter    Int?
   ownerId    Int?
   owner      User?   @relation(fields: [ownerId], references: [id])
