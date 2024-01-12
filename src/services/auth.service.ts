@@ -32,12 +32,12 @@ export async function Register(email: string, password: string) {
     throw ERRORS.createFailed;
   }
 }
-async function UserExist(email: string): Promise<boolean> {
+export async function UserExist(email: string): Promise<boolean> {
   const user = await FindUser(email);
   return !!user;
 }
 
-async function FindUser(
+export async function FindUser(
   email: string,
 ): Promise<{ id: number; email: string; password: string; salt: string }> {
   return await prisma.user.findFirst({
