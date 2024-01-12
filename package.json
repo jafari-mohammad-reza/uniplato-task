@@ -5,22 +5,16 @@
   "main": "index.js",
   "scripts": {
     "build": "tsc -p tsconfig.json",
-    "prestart": "ts-node ./src/db/seed.ts",
+    "seed": "pnpx prisma generate && ts-node ./src/db/seed.ts",
     "start:prod": "node dist/index.js | pino-pretty --colorize",
-    "start:dev": "ts-node-dev ./src/index.ts | pino-pretty --colorize",
+    "start:dev": "pnpm run seed && ts-node-dev ./src/index.ts | pino-pretty --colorize",
     "prisma": "dotenv -e .env prisma",
     "db:gen": "pnpx prisma generate",
     "db:studio": "pnpx prisma studio",
     "db:migrate": "pnpx prisma migrate dev",
     "db:push": "pnpx prisma db push",
     "lint": "./node_modules/.bin/eslint",
-    "test": "jest src/**/*.inspect.ts"
-  },
-  "jest": {
-    "testMatch": [
-      "**/__tests__/**/*.inspect.ts",
-      "**/?(*.)+(spec|test).inspect.ts"
-    ]
+    "test": "cross-env mocha -r ts-node/register 'test/**/*.ts'"
   },
   "keywords": [],
   "author": "",
@@ -44,11 +38,17 @@
   },
   "devDependencies": {
     "@types/bcrypt": "^5.0.1",
+    "@types/chai": "^4.3.11",
     "@types/jest": "^29.5.11",
     "@types/jsonwebtoken": "^9.0.5",
+    "@types/mocha": "^10.0.6",
     "@types/node": "^20.10.8",
+    "@types/sinon": "^17.0.3",
+    "chai": "^5.0.0",
     "jest": "^29.7.0",
+    "mocha": "^10.2.0",
     "prisma": "^5.8.0",
+    "sinon": "^17.0.1",
     "ts-node": "^10.9.2",
     "tsc": "^2.0.4",
     "typescript": "^5.3.3"

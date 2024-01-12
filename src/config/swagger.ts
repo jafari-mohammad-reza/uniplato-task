@@ -1,9 +1,9 @@
 import { FastifyInstance } from 'fastify';
-import FastifySwagger from '@fastify/swagger';
+import FastifySwagger, { SwaggerOptions } from '@fastify/swagger';
 import FastifySwaggerUi from '@fastify/swagger-ui';
 import { log } from 'console';
 export async function SwaggerConf(fastify: FastifyInstance) {
-  const swaggerOptions: any = {
+  const swaggerOptions: SwaggerOptions = {
     swagger: {
       info: {
         title: 'Uniplato Task',
@@ -14,16 +14,17 @@ export async function SwaggerConf(fastify: FastifyInstance) {
       schemes: ['http'],
       consumes: ['application/x-www-form-urlencoded'],
       produces: ['application/x-www-form-urlencoded'],
-      tags: [{ name: 'Default', description: 'Default' }],
       securityDefinitions: {
         apiKey: {
           type: 'apiKey',
-          name: 'apiKey',
+          name: 'authorization',
           in: 'header',
         },
       },
+      security: [{ apiKey: [] }],
     },
   };
+
   const swaggerUiOptions: any = {
     routePrefix: '/docs',
     exposeRoute: true,
