@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "build": "tsc -p tsconfig.json",
+    "prestart": "ts-node ./src/db/seed.ts",
     "start:prod": "node dist/index.js | pino-pretty --colorize",
     "start:dev": "ts-node-dev ./src/index.ts | pino-pretty --colorize",
     "prisma": "dotenv -e .env prisma",
@@ -26,7 +27,6 @@
     "@fastify/swagger": "^8.13.0",
     "@fastify/swagger-ui": "^2.0.1",
     "@prisma/client": "^5.8.0",
-    "bcrypt": "^5.0.1",
     "dotenv": "^16.3.1",
     "fastify": "^4.25.2",
     "fluent-json-schema": "^4.2.1",

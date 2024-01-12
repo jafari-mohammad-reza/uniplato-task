@@ -16,6 +16,7 @@ services:
       - mysql
     env_file:
       - .env
+    restart: on-failure
     networks:
       - uniplato_network
 
