@@ -14,16 +14,18 @@ export async function SwaggerConf(fastify: FastifyInstance) {
       schemes: ['http'],
       consumes: ['application/x-www-form-urlencoded'],
       produces: ['application/x-www-form-urlencoded'],
-      tags: [{ name: 'Default', description: 'Default' }],
       securityDefinitions: {
         apiKey: {
           type: 'apiKey',
-          name: 'apiKey',
+          schema: 'bearer',
+          name: 'authorization',
           in: 'header',
         },
       },
     },
+    security: [{ apiKey: [] }],
   };
+
   const swaggerUiOptions: any = {
     routePrefix: '/docs',
     exposeRoute: true,

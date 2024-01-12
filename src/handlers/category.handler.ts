@@ -1,9 +1,18 @@
 import { FastifyReply, FastifyRequest } from 'fastify';
-import { IdParam } from 'schema';
+import { IdParam } from '../schema';
+import { CategoryDto } from '../schema/category.schema';
+import {
+  CreateCategory,
+  DeleteCategory,
+  GetAllCategories,
+  GetOneCategory,
+  UpdateCategory,
+} from '../services';
 
 export async function GetAllCategoriesHandler(req: FastifyRequest, rep: FastifyReply) {
-  rep.send({
-    msg: 'categories',
+  const categories = await GetAllCategories();
+  return rep.status(200).send({
+    categories,
   });
 }
 
@@ -12,23 +21,34 @@ export async function GetCategoryHandler(
   rep: FastifyReply,
 ) {
   const { id } = req.params;
-  rep.send({
-    msg: 'categories',
+  const category = await GetOneCategory(id);
+  return rep.status(200).send({
+    category,
   });
 }
 
-export async function CreateCategoryHandler(req: FastifyRequest, rep: FastifyReply) {
-  rep.send({
-    msg: 'categories',
+export async function CreateCategoryHandler(
+  req: FastifyRequest<{ Body: CategoryDto; Headers: { userid: number } }>,
+  rep: FastifyReply,
+) {
+  const dto = { ...req.body, ownerId: req.headers.userid };
+  console.log('dto :>> ', dto);
+  const createdCategory = await CreateCategory(dto);
+  return rep.status(201).send({
+    createdCategory,
   });
 }
 export async function UpdateCategoryHandler(
-  req: FastifyRequest<{ Params: IdParam }>,
+  req: FastifyRequest<{ Params: IdParam; Body: CategoryDto }>,
   rep: FastifyReply,
 ) {
   const { id } = req.params;
-  rep.send({
-    msg: 'categories',
+  const dto = { ...req.body };
+  delete dto.ownerId;
+  console.log('dto :>> ', dto);
+  await UpdateCategory(id, dto);
+  return rep.status(200).send({
+    msg: 'category got updated',
   });
 }
 export async function DeleteCategoryHandler(
@@ -36,7 +56,8 @@ export async function DeleteCategoryHandler(
   rep: FastifyReply,
 ) {
   const { id } = req.params;
-  rep.send({
-    msg: 'categories',
+  await DeleteCategory(id);
+  return rep.status(200).send({
+    msg: 'category got removed',
   });
 }

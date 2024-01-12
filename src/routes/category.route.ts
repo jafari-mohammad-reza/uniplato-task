@@ -1,4 +1,4 @@
-import { FastifyInstance, FastifySchema } from 'fastify';
+import { FastifyInstance } from 'fastify';
 import { CreateCategorySchema, IdParameter, UpdateCategorySchema } from '../schema/category.schema';
 import {
   CreateCategoryHandler,
@@ -7,55 +7,44 @@ import {
   GetCategoryHandler,
   UpdateCategoryHandler,
 } from '../handlers';
+import { AuthorizationMiddleware } from '../middlewares';
 
 export async function CategoryRoute(server: FastifyInstance) {
   const CategorySchema = {
     tags: ['Category'],
     consumes: ['application/x-www-form-urlencoded'],
   };
-  server.route({
-    url: '/category',
-    method: 'GET',
-    handler: GetAllCategoriesHandler,
-    schema: {
-      ...CategorySchema,
-    } as FastifySchema,
-  });
-  server.route({
-    url: '/category/:id',
-    method: 'GET',
-    handler: GetCategoryHandler,
-    schema: {
-      ...CategorySchema,
-      ...IdParameter,
+
+  server.register(
+    async (categoryRoute) => {
+      categoryRoute.addHook('preHandler', AuthorizationMiddleware);
+
+      categoryRoute.get('/', { schema: { ...CategorySchema } }, GetAllCategoriesHandler);
+
+      categoryRoute.get(
+        '/:id',
+        { schema: { ...CategorySchema, ...IdParameter } },
+        GetCategoryHandler,
+      );
+
+      categoryRoute.post(
+        '/',
+        { schema: { ...CategorySchema, body: CreateCategorySchema } },
+        CreateCategoryHandler,
+      );
+
+      categoryRoute.put(
+        '/:id',
+        { schema: { ...CategorySchema, ...IdParameter, body: UpdateCategorySchema } },
+        UpdateCategoryHandler,
+      );
+
+      categoryRoute.delete(
+        '/:id',
+        { schema: { ...CategorySchema, ...IdParameter } },
+        DeleteCategoryHandler,
+      );
     },
-  });
-  server.route({
-    url: '/category',
-    method: 'POST',
-    handler: CreateCategoryHandler,
-    schema: {
-      ...CategorySchema,
-      body: CreateCategorySchema,
-    } as FastifySchema,
-  });
-  server.route({
-    url: '/category/:id',
-    method: 'PUT',
-    handler: UpdateCategoryHandler,
-    schema: {
-      ...CategorySchema,
-      ...IdParameter,
-      body: UpdateCategorySchema,
-    },
-  });
-  server.route({
-    url: '/category/:id',
-    method: 'DELETE',
-    handler: DeleteCategoryHandler,
-    schema: {
-      ...CategorySchema,
-      ...IdParameter,
-    },
-  });
+    { prefix: '/category' },
+  );
 }
