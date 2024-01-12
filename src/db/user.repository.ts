@@ -18,3 +18,7 @@ export async function FindUser(
     },
   });
 }
+export const UserRepository = {
+  UserExist,
+  FindUser,
+};
